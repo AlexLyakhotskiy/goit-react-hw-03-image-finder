@@ -2,8 +2,9 @@ import { Component } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
+import Container from '../Container';
 import ImageGalleryItem from './ImageGalleryItem';
-import LoaderContainer from '../LoaderContainer';
+import LoaderSpinner from '../LoaderSpinner';
 import Button from './Button/Button';
 import Modal from '../Modal/Modal';
 
@@ -13,7 +14,7 @@ import styles from './ImageGallery.module.scss';
 
 class ImageGallery extends Component {
   static propTypes = {
-    searchQuery: PropTypes.string.isRequired,
+    searchQuery: PropTypes.string,
   };
 
   state = {
@@ -25,15 +26,16 @@ class ImageGallery extends Component {
   componentDidUpdate(prevProps, prevState) {
     const prevQuery = prevProps.searchQuery;
     const nextQuery = this.props.searchQuery;
-    const prevImgArr = prevState.imgArr;
-    const nextImgArr = this.state.imgArr;
 
     if (prevQuery !== nextQuery) {
-      this.setState({ pending: true, imgArr: [] });
+      this.setState({ imgArr: [] });
       api.searchQuery = nextQuery;
       api.resetPage();
       this.saveImages();
     }
+
+    const prevImgArr = prevState.imgArr;
+    const nextImgArr = this.state.imgArr;
 
     if (prevImgArr.length && prevImgArr !== nextImgArr) {
       window.scrollTo({
@@ -73,24 +75,29 @@ class ImageGallery extends Component {
 
   render() {
     const { imgArr, imgInModal, pending } = this.state;
+
     return (
       <>
-        <ul className={styles.ImageGallery}>
-          {imgArr.map(({ id, webformatURL }) => (
-            <ImageGalleryItem
-              webformatURL={webformatURL}
-              key={id}
-              id={id}
-              onImgClick={this.onImgClick}
-            />
-          ))}
-        </ul>
+        <Container>
+          <ul className={styles.ImageGallery}>
+            {imgArr.map(({ id, webformatURL }) => (
+              <ImageGalleryItem
+                webformatURL={webformatURL}
+                key={id}
+                id={id}
+                onImgClick={this.onImgClick}
+              />
+            ))}
+          </ul>
+        </Container>
+
         {imgArr.length && !pending ? (
           <Button onBtnLoadMoreClick={this.onBtnLoadMoreClick} />
         ) : (
           ''
         )}
-        {pending && <LoaderContainer />}
+
+        {pending && <LoaderSpinner />}
 
         {imgInModal && (
           <Modal closeModal={this.closeModal}>

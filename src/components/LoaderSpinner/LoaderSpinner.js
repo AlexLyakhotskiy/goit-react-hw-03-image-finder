@@ -1,8 +1,8 @@
 import Loader from 'react-loader-spinner';
 
-import styles from './LoaderContainer.module.scss';
+import styles from './LoaderSpinner.module.scss';
 
-const LoaderContainer = () => {
+const LoaderSpinner = () => {
   return (
     <div className={styles.container}>
       <Loader
@@ -16,4 +16,4 @@ const LoaderContainer = () => {
   );
 };
 
-export default LoaderContainer;
+export default LoaderSpinner;
