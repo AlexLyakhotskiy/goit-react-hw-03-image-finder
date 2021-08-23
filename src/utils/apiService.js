@@ -2,22 +2,6 @@ const apiUrl = 'https://pixabay.com/api/';
 const apiKey = '22632103-559b096d748294a4f3f26d1f6';
 const restApiQuery = '&image_type=photo&orientation=horizontal&per_page=12';
 
-// function fetchArticles(name, page) {
-//   const url = `${apiUrl}?q=${name}&page=${page}&key=${apiKey}${restApiQuery}`;
-
-//   return fetch(url).then(r => {
-//     if (r.ok) {
-//       return r.json();
-//     }
-
-//     return Promise.reject(new Error(`Nothing matches found. ${name}`));
-//   });
-// }
-
-// const api = {
-//   fetchArticles,
-// };
-
 const api = {
   searchQuery: '',
   page: 1,
@@ -34,6 +18,10 @@ const api = {
     }
     this.incrementPage();
     return data;
+  },
+
+  setQuery(value) {
+    this.searchQuery = value;
   },
 
   incrementPage() {

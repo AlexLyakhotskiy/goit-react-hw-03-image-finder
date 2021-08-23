@@ -29,7 +29,7 @@ class ImageGallery extends Component {
 
     if (prevQuery !== nextQuery) {
       this.setState({ imgArr: [] });
-      api.searchQuery = nextQuery;
+      api.setQuery(nextQuery);
       api.resetPage();
       this.saveImages();
     }
@@ -91,10 +91,8 @@ class ImageGallery extends Component {
           </ul>
         </Container>
 
-        {imgArr.length && !pending ? (
+        {!!imgArr.length && !pending && (
           <Button onBtnLoadMoreClick={this.onBtnLoadMoreClick} />
-        ) : (
-          ''
         )}
 
         {pending && <LoaderSpinner />}

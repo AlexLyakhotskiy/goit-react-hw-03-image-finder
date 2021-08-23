@@ -5,13 +5,7 @@ import styles from './LoaderSpinner.module.scss';
 const LoaderSpinner = () => {
   return (
     <div className={styles.container}>
-      <Loader
-        type="ThreeDots"
-        color="#6e7b80"
-        height={80}
-        width={80}
-        //   timeout={3000}
-      />
+      <Loader type="ThreeDots" color="#6e7b80" height={80} width={80} />
     </div>
   );
 };
