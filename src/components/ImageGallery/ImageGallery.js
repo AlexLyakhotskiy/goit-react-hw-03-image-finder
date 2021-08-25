@@ -62,15 +62,18 @@ class ImageGallery extends Component {
 
   saveImages() {
     this.setState({ pending: true });
-    api
-      .fetchArticles()
-      .then(({ hits }) =>
-        this.setState(({ imgArr }) => ({
-          imgArr: [...imgArr, ...hits],
-        })),
-      )
-      .catch(error => toast.error(`${error}`))
-      .finally(this.setState({ pending: false }));
+
+    setTimeout(() => {
+      api
+        .fetchArticles()
+        .then(({ hits }) =>
+          this.setState(({ imgArr }) => ({
+            imgArr: [...imgArr, ...hits],
+          })),
+        )
+        .catch(error => toast.error(`${error}`))
+        .finally(this.setState({ pending: false }));
+    }, 1000);
   }
 
   render() {
@@ -80,9 +83,10 @@ class ImageGallery extends Component {
       <>
         <Container>
           <ul className={styles.ImageGallery}>
-            {imgArr.map(({ id, webformatURL }) => (
+            {imgArr.map(({ id, webformatURL, tags }) => (
               <ImageGalleryItem
                 webformatURL={webformatURL}
+                alt={tags}
                 key={id}
                 id={id}
                 onImgClick={this.onImgClick}
@@ -99,7 +103,7 @@ class ImageGallery extends Component {
 
         {imgInModal && (
           <Modal closeModal={this.closeModal}>
-            <img src={imgInModal} alt="" />
+            <img src={imgInModal} alt="large pic in modal" />
           </Modal>
         )}
       </>
