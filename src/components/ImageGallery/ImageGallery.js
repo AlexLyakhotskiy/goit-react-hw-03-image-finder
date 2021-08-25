@@ -63,17 +63,15 @@ class ImageGallery extends Component {
   saveImages() {
     this.setState({ pending: true });
 
-    setTimeout(() => {
-      api
-        .fetchArticles()
-        .then(({ hits }) =>
-          this.setState(({ imgArr }) => ({
-            imgArr: [...imgArr, ...hits],
-          })),
-        )
-        .catch(error => toast.error(`${error}`))
-        .finally(this.setState({ pending: false }));
-    }, 1000);
+    api
+      .fetchArticles()
+      .then(({ hits }) =>
+        this.setState(({ imgArr }) => ({
+          imgArr: [...imgArr, ...hits],
+        })),
+      )
+      .catch(error => toast.error(`${error}`))
+      .finally(() => this.setState({ pending: false }));
   }
 
   render() {
